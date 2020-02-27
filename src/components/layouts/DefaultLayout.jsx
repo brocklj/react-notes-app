@@ -8,8 +8,9 @@ function DefaultLayout(props) {
     <Container>
       <Row>App example</Row>
       <Row>
-        <Col>React Notes</Col>
+        <Col></Col>
         <Col>{children}</Col>
+        <Col></Col>
       </Row>
     </Container>
   );

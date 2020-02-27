@@ -1,11 +1,11 @@
 import React from 'react';
-import { NotesList } from './NotesList';
 import DefaultLayout from './layouts/DefaultLayout';
+import Root from '../containers/Root';
 
 const App = () => {
   return (
     <DefaultLayout>
-      <NotesList />
+      <Root />
     </DefaultLayout>
   );
 };
