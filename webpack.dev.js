@@ -18,6 +18,7 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'dist'),
     port: 9000,
     historyApiFallback: true,
+    watchOptions: { aggregateTimeout: 300, poll: 1000 },
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
