@@ -5,7 +5,8 @@ const axios = Axios.create({
   baseURL: API_URL,
   headers: {
     'Access-Control-Allow-Origin': '*'
-  }
+  },
+  crossdomain: true
 });
 
 export default axios;

@@ -5,7 +5,7 @@ import reducers from '../reducers';
 
 const loggerMiddleware = createLogger();
 
-export default function configureStore(preState) {
+export default function initStore(preState) {
   return createStore(
     reducers,
     preState,
