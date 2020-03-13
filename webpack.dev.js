@@ -10,7 +10,7 @@ const htmlPlugin = new HTMLWebPackPlugin({
 
 module.exports = {
   mode: 'development',
-  devtool: 'source-map',
+  devtool: 'cheap-module-eval-source-map',
   entry: {
     app: './src/index.js'
   },
@@ -30,7 +30,8 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
   resolve: {
     extensions: ['*', '.js', '.jsx']

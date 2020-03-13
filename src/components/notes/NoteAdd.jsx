@@ -14,7 +14,7 @@ function NoteAdd(props) {
       setClicked(false);
       return;
     }
-    dispatch(addNote({ id: 10, title: newValue }));
+    dispatch(addNote({ title: newValue }));
     setNewValue('');
   }
   return (

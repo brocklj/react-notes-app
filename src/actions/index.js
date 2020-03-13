@@ -3,8 +3,10 @@ import axios from '../utils/axios';
 export const INVALIDATE_NOTES = 'INVALIDATE_NOTES';
 export const REQUEST_NOTES = 'REQUEST_NOTES';
 export const RECEIVE_NOTES = 'RECEIVE_NOTES';
-export const ADD_NOTE = 'ADD_NOTE';
-export const EDIT_NOTE = 'EDIT_NOTE';
+export const REQUEST_NOTES_CREATE = 'REQUEST_NOTES_CREATE';
+export const CREATE_NOTE = 'CREATE_NOTE';
+export const REQUEST_NOTE_UPDATE = 'REQUEST_NOTE_UPDATE';
+export const UPDATE_NOTE = 'UPDATE_NOTE';
 
 export function invalidateNotes() {
   return {
@@ -12,17 +14,31 @@ export function invalidateNotes() {
   };
 }
 
-export function addNote(note) {
+function requestCreateNote(note) {
   return {
-    type: ADD_NOTE,
-    newNote: note
+    type: REQUEST_NOTES_CREATE,
+    note: note
   };
 }
 
-export function editNote(note) {
+function createNote(note) {
   return {
-    type: EDIT_NOTE,
+    type: CREATE_NOTE,
     note: note
+  };
+}
+
+function requestUpdateNote(note) {
+  return {
+    type: REQUEST_NOTE_UPDATE,
+    note: note
+  };
+}
+
+function updateNote(note) {
+  return {
+    type: UPDATE_NOTE,
+    note
   };
 }
 
@@ -48,12 +64,20 @@ async function putNotes(id, data) {
   return await axios.put(`/notes/${id}`, data);
 }
 
-function fetchNotes() {
+async function postNote(data) {
+  return await axios.post(`/notes`, data);
+}
+
+function fetchNotes(id = '') {
   return async dispatch => {
     dispatch(requestNotes());
-    const json = await getNotes();
-    console.log(json);
-    dispatch(receiveNotes(json));
+    const res = await getNotes(id);
+
+    if (Array.isArray(res.data)) {
+      return dispatch(receiveNotes(res));
+    } else {
+      return dispatch(updateNote(res.data));
+    }
   };
 }
 
@@ -68,10 +92,27 @@ function shouldFetchNotes(state) {
   }
 }
 
-export function fetchNotesIfNeeded() {
+export function fetchNotesIfNeeded(id = '') {
   return (dispatch, getState) => {
     if (shouldFetchNotes(getState())) {
-      return dispatch(fetchNotes());
+      return dispatch(fetchNotes(id));
     }
+  };
+}
+
+export function editNote(note) {
+  return async dispatch => {
+    dispatch(requestUpdateNote(note));
+    const res = await putNotes(note.id, note);
+    dispatch(updateNote(res.data));
+  };
+}
+
+export function addNote(data) {
+  return async dispatch => {
+    dispatch(requestCreateNote(data));
+    const res = await postNote(data);
+    console.log(res);
+    dispatch(createNote(res.data));
   };
 }

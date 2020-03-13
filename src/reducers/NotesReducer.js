@@ -1,4 +1,11 @@
-import { REQUEST_NOTES, RECEIVE_NOTES, ADD_NOTE, EDIT_NOTE } from '../actions/';
+import {
+  REQUEST_NOTES,
+  RECEIVE_NOTES,
+  REQUEST_NOTES_CREATE,
+  CREATE_NOTE,
+  REQUEST_NOTE_UPDATE,
+  UPDATE_NOTE
+} from '../actions/';
 
 function NotesReducer(
   state = {
@@ -23,16 +30,28 @@ function NotesReducer(
         lastUpdated: action.recivedAt
       });
 
-    case ADD_NOTE:
-      state.notes.push(action.newNote);
+    case REQUEST_NOTES_CREATE:
       return Object.assign({}, state, {
-        isFetching: state.isFetching,
-        didInvalidate: true,
+        isFetching: true,
+        didInvalidate: true
+      });
+
+    case CREATE_NOTE:
+      state.notes.push(action.note);
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
         notes: [...state.notes],
         lastUpdated: Date.now()
       });
 
-    case EDIT_NOTE:
+    case REQUEST_NOTE_UPDATE:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: true
+      });
+
+    case UPDATE_NOTE:
       const notes = state.notes.map(note => {
         if (note.id == action.note.id) {
           return action.note;
@@ -41,7 +60,7 @@ function NotesReducer(
       });
       return Object.assign({}, state, {
         isFetching: false,
-        didInvalidate: true,
+        didInvalidate: false,
         notes: [...notes]
       });
 
