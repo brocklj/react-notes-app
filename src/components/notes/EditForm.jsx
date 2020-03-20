@@ -3,7 +3,7 @@ import Proptypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { editNote } from '../../actions';
+import { editNote } from '../../actions/NoteActions';
 
 const EditForm = connect()(function({ id, title, dispatch }) {
   const [isEditing, setIsEditing] = useState(false);

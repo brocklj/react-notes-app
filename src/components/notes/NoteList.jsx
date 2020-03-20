@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ListGroup } from 'react-bootstrap';
 
-import { fetchNotesIfNeeded } from '../../actions';
+import { fetchNotesIfNeeded } from '../../actions/NoteActions';
 
 import DefaultLayout from '../layouts/DefaultLayout';
 import Note from './Note';

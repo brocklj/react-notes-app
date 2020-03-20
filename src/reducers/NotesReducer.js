@@ -7,7 +7,7 @@ import {
   UPDATE_NOTE,
   REQUEST_NOTE_DELETE,
   RECEIVE_NOTE_DELETE
-} from '../actions/';
+} from '../actions/NoteActions';
 
 function NotesReducer(
   state = {

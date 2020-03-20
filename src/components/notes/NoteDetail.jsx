@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { fetchNotesIfNeeded, removeNote } from '../../actions';
+import { fetchNotesIfNeeded, removeNote } from '../../actions/NoteActions';
 
 import EditForm from './EditForm';
+import { FormattedMessage } from 'react-intl';
 
 function NotesDetail(props) {
   const { dispatch, isFetching } = props;
@@ -49,7 +50,7 @@ function NotesDetail(props) {
           '..loading'
         ) : (
           <Button variant="danger" onClick={handleRemoveNote}>
-            Remove
+            <FormattedMessage id={'remove'} />
           </Button>
         )}
       </Modal.Body>

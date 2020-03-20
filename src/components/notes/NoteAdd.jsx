@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { ListGroup, Form } from 'react-bootstrap';
-import { ADD_NOTE, addNote } from '../../actions';
+import { FormattedMessage } from 'react-intl';
+
+import { addNote } from '../../actions/NoteActions';
 
 function NoteAdd(props) {
   const { dispatch } = props;
@@ -23,7 +25,6 @@ function NoteAdd(props) {
         <Form.Control
           size="sm"
           type="text"
-          placeholder="+ Add note"
           onBlur={onSubmit}
           onKeyPress={e => (e.charCode === 13 ? onSubmit() : null)}
           value={newValue}
@@ -31,7 +32,7 @@ function NoteAdd(props) {
           autoFocus={true}
         ></Form.Control>
       ) : (
-        '+ Add note'
+        <FormattedMessage defaultMessage={'+ Add note'} id={'addNote'} />
       )}
     </ListGroup.Item>
   );
