@@ -4,7 +4,9 @@ import {
   REQUEST_NOTES_CREATE,
   CREATE_NOTE,
   REQUEST_NOTE_UPDATE,
-  UPDATE_NOTE
+  UPDATE_NOTE,
+  REQUEST_NOTE_DELETE,
+  RECEIVE_NOTE_DELETE
 } from '../actions/';
 
 function NotesReducer(
@@ -52,18 +54,29 @@ function NotesReducer(
       });
 
     case UPDATE_NOTE:
-      const notes = state.notes.map(note => {
-        if (note.id == action.note.id) {
-          return action.note;
-        }
-        return note;
-      });
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        notes: [...notes]
+        notes: state.notes.map(note => {
+          if (note.id == action.note.id) {
+            return action.note;
+          }
+          return note;
+        })
       });
 
+    case REQUEST_NOTE_DELETE:
+      return Object.assign({}, state, {
+        didInvalidate: true,
+        isFetching: true
+      });
+
+    case RECEIVE_NOTE_DELETE:
+      return Object.assign({}, state, {
+        didInvalidate: false,
+        isFetching: false,
+        notes: state.notes.filter(note => note.id != action.note.id)
+      });
     default:
       return state;
   }

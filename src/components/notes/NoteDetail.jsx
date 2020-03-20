@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { fetchNotesIfNeeded } from '../../actions';
+import { fetchNotesIfNeeded, removeNote } from '../../actions';
 
 import EditForm from './EditForm';
 
 function NotesDetail(props) {
-  const { dispatch } = props;
+  const { dispatch, isFetching } = props;
   const [note, setNote] = useState(null);
   const history = useHistory();
   const params = useParams();
@@ -24,19 +24,46 @@ function NotesDetail(props) {
   const onHide = () => {
     return history.push(`/`);
   };
-  if (!note) {
-    return false;
-  }
+
+  const handleRemoveNote = async () => {
+    await dispatch(removeNote(note));
+    return onHide();
+  };
+  console.log(note);
   return (
-    <Modal show={!!note} onHide={onHide}>
+    <Modal show={true} onHide={onHide}>
+      {' '}
       <Modal.Header closeButton={true}>
         <Modal.Title>
-          <EditForm id={note.id} title={note.title} />
+          {isFetching || !note ? (
+            '..loading'
+          ) : (
+            <>
+              <EditForm id={note.id} title={note.title} />
+            </>
+          )}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>Delete</Modal.Body>
+      <Modal.Body>
+        {!note ? (
+          '..loading'
+        ) : (
+          <Button variant="danger" onClick={handleRemoveNote}>
+            Remove
+          </Button>
+        )}
+      </Modal.Body>
     </Modal>
   );
 }
 
-export default connect()(NotesDetail);
+function mapStateToProps(state) {
+  const { NotesReducer } = state;
+  const { isFetching } = NotesReducer;
+
+  return {
+    isFetching
+  };
+}
+
+export default connect(mapStateToProps)(NotesDetail);

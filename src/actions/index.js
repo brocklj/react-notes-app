@@ -7,6 +7,8 @@ export const REQUEST_NOTES_CREATE = 'REQUEST_NOTES_CREATE';
 export const CREATE_NOTE = 'CREATE_NOTE';
 export const REQUEST_NOTE_UPDATE = 'REQUEST_NOTE_UPDATE';
 export const UPDATE_NOTE = 'UPDATE_NOTE';
+export const REQUEST_NOTE_DELETE = 'REQUEST_NOTE_DELETE';
+export const RECEIVE_NOTE_DELETE = 'RECEIVE_NOTE_DELETE';
 
 export function invalidateNotes() {
   return {
@@ -42,6 +44,20 @@ function updateNote(note) {
   };
 }
 
+function requestDeleteNote(note) {
+  return {
+    type: REQUEST_NOTE_DELETE,
+    note
+  };
+}
+
+function receiveDeleteNote(note) {
+  return {
+    type: RECEIVE_NOTE_DELETE,
+    note
+  };
+}
+
 const requestNotes = () => ({
   type: REQUEST_NOTES
 });
@@ -66,6 +82,10 @@ async function putNotes(id, data) {
 
 async function postNote(data) {
   return await axios.post(`/notes`, data);
+}
+
+async function deleteNotes(note) {
+  return await axios.delete(`/notes/${note.id}`);
 }
 
 function fetchNotes(id = '') {
@@ -112,7 +132,14 @@ export function addNote(data) {
   return async dispatch => {
     dispatch(requestCreateNote(data));
     const res = await postNote(data);
-    console.log(res);
-    dispatch(createNote(res.data));
+    return dispatch(createNote(res.data));
+  };
+}
+
+export function removeNote(note) {
+  return async dispatch => {
+    dispatch(requestDeleteNote(note));
+    await deleteNotes(note);
+    return dispatch(receiveDeleteNote(note));
   };
 }

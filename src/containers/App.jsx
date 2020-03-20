@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import NotesList from '../components/notes/NotesList';
-import NotesDetail from '../components/notes/NoteDetail';
+import NoteList from '../components/notes/NoteList';
+import NoteDetail from '../components/notes/NoteDetail';
 
 function App(props) {
   App.propTypes = {
@@ -12,8 +12,8 @@ function App(props) {
 
   return (
     <Router>
-      <Route path={'/'} component={NotesList} />
-      <Route path={'/notes/:id'} component={NotesDetail} />
+      <Route path={'/'} component={NoteList} />
+      <Route path={'/notes/:id'} component={NoteDetail} />
     </Router>
   );
 }

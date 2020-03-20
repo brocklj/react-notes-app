@@ -8,9 +8,7 @@ function Note({ id, title }) {
   const history = useHistory();
 
   const handleNoteDetail = () => {
-    setTimeout(() => {
-      return history.push(`/notes/${id}`);
-    }, 500);
+    return history.push(`/notes/${id}`);
   };
 
   return (
