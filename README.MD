@@ -25,6 +25,14 @@ APP_NAME = Notes example
 LANG = cs
 ```
 
+## Running the tests
+
+Run test command to run test:
+
+```
+npm run test
+```
+
 ## Deployment
 
 After instalation proceed to following steps.
