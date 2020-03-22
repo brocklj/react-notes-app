@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import Proptypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import { Form, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import { editNote } from '../../actions/NoteActions';
@@ -21,16 +22,29 @@ const EditForm = connect()(function({ id, title, dispatch }) {
   return (
     <span onClick={() => setIsEditing(true)} onBlur={() => setIsEditing(false)}>
       {isEditing ? (
-        <Form.Control
-          type={'text'}
-          autoFocus={true}
-          value={value}
-          onChange={onChange}
-          onBlur={submit}
-          onKeyPress={e => (e.charCode === 13 ? submit() : null)}
-        />
+        <InputGroup size="lg">
+          <Form.Control
+            type={'text'}
+            autoFocus={true}
+            value={value}
+            onChange={onChange}
+            onBlur={submit}
+            onKeyPress={e => (e.charCode === 13 ? submit() : null)}
+          />
+        </InputGroup>
       ) : (
-        title
+        <OverlayTrigger
+          key={'right'}
+          placement={'right'}
+          overlay={
+            <Tooltip id={`tooltip-right`}>
+              {' '}
+              <FormattedMessage id={'clickToEdit'} />
+            </Tooltip>
+          }
+        >
+          <span>{title}</span>
+        </OverlayTrigger>
       )}
     </span>
   );

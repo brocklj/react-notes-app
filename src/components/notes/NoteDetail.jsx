@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import Proptypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import { fetchNotesIfNeeded, removeNote } from '../../actions/NoteActions';
 
 import EditForm from './EditForm';
 import { FormattedMessage } from 'react-intl';
 
+const Title = styled(Modal.Title)`
+  width: 100%;
+`;
+
 function NotesDetail(props) {
+  NotesDetail.propTypes = {
+    dispatch: Proptypes.func.isRequired
+  };
   const { dispatch, isFetching } = props;
   const [note, setNote] = useState(null);
   const history = useHistory();
@@ -35,7 +44,7 @@ function NotesDetail(props) {
     <Modal show={true} onHide={onHide}>
       {' '}
       <Modal.Header closeButton={true}>
-        <Modal.Title>
+        <Title className={'modal-title-full-width'}>
           {isFetching || !note ? (
             '...processing'
           ) : (
@@ -43,7 +52,7 @@ function NotesDetail(props) {
               <EditForm id={note.id} title={note.title} />
             </>
           )}
-        </Modal.Title>
+        </Title>
       </Modal.Header>
       <Modal.Body>
         <Button variant="danger" onClick={handleRemoveNote}>
