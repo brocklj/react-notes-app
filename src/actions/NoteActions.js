@@ -23,7 +23,7 @@ function requestCreateNote(note) {
   };
 }
 
-function createNote(note) {
+export function createNote(note) {
   return {
     type: CREATE_NOTE,
     note: note
