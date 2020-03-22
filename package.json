@@ -4,7 +4,6 @@
   "description": "Jakub Bröckl",
   "private": true,
   "scripts": {
-    "postinstall": "build",
     "start": "npx serve ./dist -p 9000",
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --open --config webpack.dev.js",

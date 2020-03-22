@@ -37,7 +37,7 @@ function NotesDetail(props) {
       <Modal.Header closeButton={true}>
         <Modal.Title>
           {isFetching || !note ? (
-            '..loading'
+            '...processing'
           ) : (
             <>
               <EditForm id={note.id} title={note.title} />
@@ -46,13 +46,9 @@ function NotesDetail(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {!note ? (
-          '..loading'
-        ) : (
-          <Button variant="danger" onClick={handleRemoveNote}>
-            <FormattedMessage id={'remove'} />
-          </Button>
-        )}
+        <Button variant="danger" onClick={handleRemoveNote}>
+          <FormattedMessage id={'remove'} />
+        </Button>
       </Modal.Body>
     </Modal>
   );

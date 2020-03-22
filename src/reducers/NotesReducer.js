@@ -9,6 +9,8 @@ import {
   RECEIVE_NOTE_DELETE
 } from '../actions/NoteActions';
 
+import { addOrUpdate } from '../utils/functions';
+
 function NotesReducer(
   state = {
     isFetching: false,
@@ -39,11 +41,10 @@ function NotesReducer(
       });
 
     case CREATE_NOTE:
-      state.notes.push(action.note);
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        notes: [...state.notes],
+        notes: addOrUpdate(state.notes, action.note),
         lastUpdated: Date.now()
       });
 
@@ -57,12 +58,7 @@ function NotesReducer(
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        notes: state.notes.map(note => {
-          if (note.id == action.note.id) {
-            return action.note;
-          }
-          return note;
-        })
+        notes: addOrUpdate(state.notes, action.note)
       });
 
     case REQUEST_NOTE_DELETE:
